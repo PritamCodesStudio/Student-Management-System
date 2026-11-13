@@ -1,10 +1,15 @@
 import json
 import streamlit as st
 from pathlib import Path
+from datetime import datetime
 
 st.set_page_config(page_title="Student Management System", page_icon="🎓", layout="wide")
 
 DATABASE = "school_data.json"
+
+# DYNAMIC DATE - CHANGES EVERY DAY AUTOMATICALLY
+today_date = datetime.now().strftime("%d %b %Y")
+today_day = datetime.now().strftime("%A")
 
 def load_data():
     if Path(DATABASE).exists():
@@ -86,14 +91,14 @@ input, select, textarea { border-radius: 12px !important; }
 </style>
 """, unsafe_allow_html=True)
 
-# HEADER
+# HEADER - DYNAMIC DATE HERE
 col1, col2 = st.columns([3, 1])
 with col1:
     st.markdown('<span class="top-badge">Student Management System</span>', unsafe_allow_html=True)
     st.markdown('<h1 style="font-size:42px;margin:10px 0 4px;">Student Management <span class="gold"><i>System.</i></span></h1>', unsafe_allow_html=True)
     st.markdown('<p style="color:#B8B2A8;margin:0;">Manage students, teachers and grades in one premium dashboard.</p>', unsafe_allow_html=True)
 with col2:
-    st.markdown(f"<div class='kpi' style='text-align:center'><small>Today</small><b style='font-size:20px;'>3 Dec 2026</b><span>Live System</span></div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='kpi' style='text-align:center'><small>{today_day}</small><b style='font-size:20px;'>{today_date}</b><span>Live System</span></div>", unsafe_allow_html=True)
 
 st.markdown("<br>", unsafe_allow_html=True)
 
@@ -118,6 +123,7 @@ st.markdown("<br>", unsafe_allow_html=True)
 with st.sidebar:
     st.markdown("### 🎓 Navigation")
     menu = st.radio("", ["🏠 Dashboard", "👨‍🎓 Register Student", "👩‍🏫 Register Teacher", "📝 Add Grades", "🔍 Student Details", "🔍 Teacher Details"], label_visibility="collapsed")
+    st.markdown(f"<p style='font-size:12px; color:#A8A29E; margin-top:20px;'>📅 {today_day}<br><b style='color:#E8C87A;'>{today_date}</b></p>", unsafe_allow_html=True)
 
 if menu == "🏠 Dashboard":
     c1, c2 = st.columns([1.4, 1])
@@ -285,4 +291,4 @@ elif menu == "🔍 Teacher Details":
                 st.markdown("<br>", unsafe_allow_html=True)
                 st.markdown(f"<div class='card'><p class='detail-label'>Contact Information</p><p style='margin-top:8px;'>Email<br><b>{found['email']}</b></p></div>", unsafe_allow_html=True)
 
-st.markdown("<br><p style='text-align:center;color:#77716A;font-size:12px;letter-spacing:1.5px;'>STUDENT MANAGEMENT SYSTEM © 2026 • BUILT FOR FOCUS</p>", unsafe_allow_html=True)
+st.markdown(f"<br><p style='text-align:center;color:#77716A;font-size:12px;letter-spacing:1.5px;'>STUDENT MANAGEMENT SYSTEM © {datetime.now().year} • {today_date} • BUILT FOR FOCUS</p>", unsafe_allow_html=True)
